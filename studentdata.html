@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Firebase Student Upload</title>
+</head>
+<body>
+  <h2>Uploading student data to Firestore...</h2>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDjosl6Ivn2jVn9WQ1eyaESBiaDH9LaMEg",
+      authDomain: "winggo-5b6a7.firebaseapp.com",
+      projectId: "winggo-5b6a7",
+      storageBucket: "winggo-5b6a7.appspot.com",
+      messagingSenderId: "1011272099548",
+      appId: "1:1011272099548:web:f2cb2bd4f064ead5ef7619",
+      measurementId: "G-J76VD44RHQ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const students = [
+      {
+        personalInfo: {
+          fullName: "Karan Singh",
+          dob: "2006-05-10",
+          gender: "Male",
+          bloodGroup: "B+",
+          nationality: "Indian",
+          contact: {
+            phone: "+91XXXXXXXXXX",
+            email: "karan@email.com",
+            permanentAddress: "123 Street, Uttarakhand",
+            guardianAddress: "456 Street, Dehradun"
+          }
+        },
+        admissionInfo: {
+          admissionNumber: "BTECH2025001",
+          enrollmentNumber: "UNI123456",
+          course: "B.Tech",
+          branch: "CSE",
+          academicYear: "2025-2029",
+          admissionDate: "2025-07-01",
+          category: "General",
+          modeOfAdmission: "JEE Main"
+        },
+        academicPerformance: {
+          semesters: {
+            sem1: {
+              subjects: {
+                Maths: 85,
+                Physics: 78
+              },
+              sgpa: 8.2
+            },
+            sem2: {
+              subjects: {
+                DSA: 90,
+                DBMS: 88
+              },
+              sgpa: 9.1
+            }
+          },
+          cgpa: 8.6
+        },
+        attendance: {
+          totalPercentage: 87,
+          byCourse: {
+            Physics: 82,
+            Maths: 91
+          },
+          leaves: [
+            {
+              type: "Medical",
+              from: "2025-09-01",
+              to: "2025-09-03",
+              reason: "Fever"
+            }
+          ],
+          dailyRecords: {
+            "2025-04-25": {
+              Physics: "present",
+              Maths: "absent",
+              English: "present"
+            },
+            "2025-04-26": {
+              Physics: "present",
+              Maths: "present",
+              English: "present"
+            }
+          }
+        },
+        feeDetails: {
+          feePaid: 75000,
+          totalFee: 100000,
+          due: 25000,
+          lastPaymentDate: "2025-08-01",
+          scholarship: {
+            type: "Merit-based",
+            amount: 20000
+          }
+        },
+        hostelTransport: {
+          hostel: {
+            allotted: true,
+            roomNo: "H-201"
+          },
+          transport: {
+            availed: true,
+            route: "Route 5 - Dehradun",
+            pickupPoint: "Clock Tower"
+          }
+        },
+        internships: [
+          {
+            company: "TCS",
+            duration: "2 months",
+            project: "AI Chatbot"
+          }
+        ],
+        placement: {
+          status: "placed",
+          company: "Infosys",
+          package: "6 LPA"
+        },
+        activities: {
+          clubs: ["Coding Club", "Drama Club"],
+          certifications: ["Python", "Ethical Hacking"],
+          volunteering: ["Blood Donation Camp"]
+        },
+        access: {
+          studentPortalID: "karan2025",
+          libraryCardID: "LIB789",
+          rfid: "RFID456"
+        }
+      },
+      // Ananya Sharma's data
+      {
+        personalInfo: {
+          fullName: "Ananya Sharma",
+          dob: "2005-11-22",
+          gender: "Female",
+          bloodGroup: "A+",
+          nationality: "Indian",
+          
+          contact: {
+            phone: "+91XXXXXXXXXX",
+            email: "ananya.sharma@email.com",
+            permanentAddress: "789 Hill Road, Nainital",
+            guardianAddress: "789 Hill Road, Nainital"
+          }
+        },
+        admissionInfo: {
+          admissionNumber: "BTECH2025002",
+          enrollmentNumber: "UNI123457",
+          course: "B.Tech",
+          branch: "ECE",
+          academicYear: "2025-2029",
+          admissionDate: "2025-07-01",
+          category: "OBC",
+          modeOfAdmission: "JEE Main"
+        },
+        
+        academicPerformance: {
+          semesters: {
+            sem1: {
+              subjects: {
+                Maths: 88,
+                Physics: 82
+              },
+              sgpa: 8.5
+            },
+            sem2: {
+              subjects: {
+                "Analog Electronics": 85,
+                "Signals and Systems": 80
+              },
+              sgpa: 8.7
+            }
+          },
+          cgpa: 8.6
+        },
+        attendance: {
+          totalPercentage: 90,
+          byCourse: {
+            Physics: 88,
+            Maths: 92
+          },
+          leaves: [
+            {
+              type: "Personal",
+              from: "2025-10-10",
+              to: "2025-10-12",
+              reason: "Family Function"
+            }
+          ],
+          dailyRecords: {
+            "2025-04-25": {
+              Physics: "present",
+              Maths: "present",
+              English: "present"
+            },
+            "2025-04-26": {
+              Physics: "present",
+              Maths: "present",
+              English: "present"
+            }
+          }
+        },
+        feeDetails: {
+          feePaid: 80000,
+          totalFee: 100000,
+          due: 20000,
+          lastPaymentDate: "2025-08-01",
+          scholarship: {
+            type: "Merit-based",
+            amount: 15000
+          }
+        },
+        hostelTransport: {
+          hostel: {
+            allotted: true,
+            roomNo: "H-202"
+          },
+          transport: {
+            availed: false,
+            route: "",
+            pickupPoint: ""
+          }
+        },
+        internships: [
+          {
+            company: "Wipro",
+            duration: "2 months",
+            project: "IoT-based Home Automation"
+          }
+        ],
+        placement: {
+          status: "placed",
+          company: "TCS",
+          package: "5.5 LPA"
+        },
+        activities: {
+          clubs: ["Robotics Club", "Music Club"],
+          certifications: ["C++", "Embedded Systems"],
+          volunteering: ["Tree Plantation Drive"]
+        },
+        access: {
+          studentPortalID: "ananya2025",
+          libraryCardID: "LIB790",
+          rfid: "RFID457"
+        }
+      },
+      // Rohit Verma's data
+      {
+  personalInfo: {
+    fullName: "Rohit Verma",
+    dob: "2004-08-15",
+    gender: "Male",
+    bloodGroup: "O+",
+    nationality: "Indian",
+    contact: {
+      phone: "+91XXXXXXXXXX",
+      email: "rohit.verma@email.com",
+      permanentAddress: "55 Canal Road, Lucknow",
+      guardianAddress: "55 Canal Road, Lucknow"
+    }
+  },
+  admissionInfo: {
+    admissionNumber: "BTECH2025003",
+    enrollmentNumber: "UNI123458",
+    course: "B.Tech",
+    branch: "Mechanical",
+    academicYear: "2025-2029",
+    admissionDate: "2025-07-01",
+    category: "SC",
+    modeOfAdmission: "Direct Admission"
+  },
+  
+  academicPerformance: {
+    semesters: {
+      sem1: {
+        subjects: {
+          Mechanics: 75,
+          Maths: 80
+        },
+        sgpa: 7.9
+      }
+    },
+    cgpa: 7.9
+  },
+  attendance: {
+    totalPercentage: 92,
+    byCourse: {
+      Mechanics: 94,
+      Maths: 90
+    },
+    leaves: [],
+    dailyRecords: {}
+  },
+  feeDetails: {
+    feePaid: 70000,
+    totalFee: 100000,
+    due: 30000,
+    lastPaymentDate: "2025-08-01",
+    scholarship: null
+  },
+  hostelTransport: {
+    hostel: { allotted: false, roomNo: "" },
+    transport: {
+      availed: true,
+      route: "Route 3 - Alambagh",
+      pickupPoint: "Metro Station"
+    }
+  },
+  internships: [],
+  placement: { status: "not eligible", company: "", package: "" },
+  activities: {
+    clubs: ["Automobile Club"],
+    certifications: ["AutoCAD"],
+    volunteering: []
+  },
+  access: {
+    studentPortalID: "rohit2025",
+    libraryCardID: "LIB791",
+    rfid: "RFID458"
+  }
+},
+      // Priya Deshmukh's data
+{
+  personalInfo: {
+    fullName: "Priya Deshmukh",
+    dob: "2005-03-30",
+    gender: "Female",
+    bloodGroup: "B-",
+    nationality: "Indian",
+    contact: {
+      phone: "+91XXXXXXXXXX",
+      email: "priya.d@email.com",
+      permanentAddress: "MG Road, Pune",
+      guardianAddress: "MG Road, Pune"
+    }
+  },
+  admissionInfo: {
+    admissionNumber: "BTECH2025004",
+    enrollmentNumber: "UNI123459",
+    course: "B.Tech",
+    branch: "IT",
+    academicYear: "2025-2029",
+    admissionDate: "2025-07-01",
+    category: "General",
+    modeOfAdmission: "JEE Advanced"
+  },
+  academicPerformance: {
+    semesters: {
+      sem1: {
+        subjects: {
+          Programming: 95,
+          Maths: 93
+        },
+        sgpa: 9.5
+      }
+    },
+    cgpa: 9.5
+  },
+  attendance: {
+    totalPercentage: 95,
+    byCourse: {
+      Programming: 96,
+      Maths: 94
+    },
+    leaves: [],
+    dailyRecords: {}
+  },
+  feeDetails: {
+    feePaid: 100000,
+    totalFee: 100000,
+    due: 0,
+    lastPaymentDate: "2025-07-30",
+    scholarship: {
+      type: "National Talent",
+      amount: 50000
+    }
+  },
+  hostelTransport: {
+    hostel: { allotted: true, roomNo: "H-203" },
+    transport: {
+      availed: false,
+      route: "",
+      pickupPoint: ""
+    }
+  },
+  internships: [],
+  placement: { status: "not eligible", company: "", package: "" },
+  activities: {
+    clubs: ["Tech Society", "Literary Club"],
+    certifications: ["Java", "Web Dev"],
+    volunteering: ["Orphanage Visit"]
+  },
+  access: {
+    studentPortalID: "priya2025",
+    libraryCardID: "LIB792",
+    rfid: "RFID459"
+  }
+},
+// Aditya Joshi's data
+{
+  personalInfo: {
+    fullName: "Aditya Joshi",
+    dob: "2003-12-10",
+    gender: "Male",
+    bloodGroup: "AB+",
+    nationality: "Indian",
+    contact: {
+      phone: "+91XXXXXXXXXX",
+      email: "aditya.joshi@email.com",
+      permanentAddress: "Baner, Pune",
+      guardianAddress: "Baner, Pune"
+    }
+  },
+  admissionInfo: {
+    admissionNumber: "BTECH2025005",
+    enrollmentNumber: "UNI123460",
+    course: "B.Tech",
+    branch: "Civil",
+    academicYear: "2025-2029",
+    admissionDate: "2025-07-01",
+    category: "ST",
+    modeOfAdmission: "Management Quota"
+  },
+  
+  academicPerformance: {
+    semesters: {},
+    cgpa: 0
+  },
+  attendance: {
+    totalPercentage: 75,
+    byCourse: {},
+    leaves: [
+      {
+        type: "Medical",
+        from: "2025-09-20",
+        to: "2025-09-23",
+        reason: "Injury"
+      }
+    ],
+    dailyRecords: {}
+  },
+  feeDetails: {
+    feePaid: 50000,
+    totalFee: 100000,
+    due: 50000,
+    lastPaymentDate: "2025-08-01",
+    scholarship: null
+  },
+  hostelTransport: {
+    hostel: { allotted: false, roomNo: "" },
+    transport: {
+      availed: true,
+      route: "Route 7 - Shivaji Nagar",
+      pickupPoint: "Main Square"
+    }
+  },
+  internships: [],
+  placement: { status: "not eligible", company: "", package: "" },
+  activities: {
+    clubs: [],
+    certifications: [],
+    volunteering: []
+  },
+  access: {
+    studentPortalID: "aditya2025",
+    libraryCardID: "LIB793",
+    rfid: "RFID460"
+  }
+}
+
+    ];
+
+    const uploadStudents = async () => {
+      for (const student of students) {
+        try {
+          const docRef = doc(db, "students", student.admissionInfo.admissionNumber);
+          await setDoc(docRef, student);
+          console.log(`✅ ${student.personalInfo.fullName} added!`);
+        } catch (err) {
+          console.error("❌ Error adding student:", err);
+        }
+      }
+    };
+
+    uploadStudents();
+  </script>
+</body>
+</html>
