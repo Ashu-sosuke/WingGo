@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Attendance Form</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="attendance-container">
+    <h1>Attendance Form</h1>
+    <form id="attendance-form">
+      <label for="student-select">Select Student:</label>
+      <select id="student-select" name="student-select" required>
+        <option value="">-- Select a Student --</option>
+      </select>
+
+      <label for="date">Date:</label>
+      <input type="date" id="date" name="date" required>
+      
+      <label for="english">English:</label>
+      <input type="radio" name="english" value="1" required> Present
+      <input type="radio" name="english" value="0"> Absent
+      
+      <label for="maths">Maths:</label>
+      <input type="radio" name="maths" value="1" required> Present
+      <input type="radio" name="maths" value="0"> Absent
+      
+      <label for="comp-sci">Computer Science:</label>
+      <input type="radio" name="comp-sci" value="1" required> Present
+      <input type="radio" name="comp-sci" value="0"> Absent
+      
+      <label for="chemistry">Chemistry:</label>
+      <input type="radio" name="chemistry" value="1" required> Present
+      <input type="radio" name="chemistry" value="0"> Absent
+      
+      <button type="submit">Submit Attendance</button>
+    </form>
+  </div>
+
+  <script type="module" src="attendance.js"></script>
+</body>
+</html>

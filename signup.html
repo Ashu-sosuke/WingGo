@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Signup Page</title>
+  <link rel="stylesheet" href="signup.css">
+</head>
+<body>
+  <div class="signup-container">
+    <h1>Signup</h1>
+    <form id="signup-form">
+      <label for="email">Email Address:</label>
+      <input type="email" id="email" name="email" required placeholder="Enter your email" />
+
+      <label for="college-name">College Name:</label>
+      <input type="text" id="college-name" name="college-name" required>
+
+      <label for="student-name">Student Name:</label>
+      <input type="text" id="student-name" name="student-name" required>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+
+      <button type="submit">Sign Up</button>
+    </form>
+  </div>
+
+  <script type="module" src="server.js"></script>
+</body>
+</html>
